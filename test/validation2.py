@@ -1,39 +1,21 @@
+import sys
+sys.path.append('./src')
+
 from datetime import datetime
 import pytest
-
-def validate_dates(date_str1):
-    try:
-        datetime.strptime(date_str1,'%Y-%m-%d')
-        return True
-    except ValueError:
-        return False
-
-def validate_datetime(date_str2):
-    try :
-        datetime.strptime(date_str2,'%Y-%m-%d %H:%M:%S')
-        return True
-    except ValueError :
-        return False
-    
-def validate_dateformat(date_str):
-    if len(date_str) == 10 :
-        return validate_dates(date_str)
-    elif len(date_str) == 19 :
-        return validate_datetime(date_str)
-    else :
-        return False
+from validate_date_format import validate_dateformat
 
 class TestValidDateCase:
     def test_valid_dates(self):
-        assert validate_dateformat("2024-05-21") 
-        assert validate_dateformat("1900-01-01")
-        assert validate_dateformat("0001-01-01")
-        assert validate_dateformat("9999-12-31")
-        assert validate_dateformat("2024-05-12")
+        assert "2024-05-21" == validate_dateformat("2024-05-21")
+        assert "1900-01-01" == validate_dateformat("1900-01-01")
+        assert "0001-01-01" == validate_dateformat("0001-01-01")
+        assert "9999-12-31" == validate_dateformat("9999-12-31")
+        assert "2024-05-12" == validate_dateformat("2024-05-12")
 
     def test_valid_datetimes(self):
-        assert validate_dateformat("2024-05-21 00:00:00")
-        assert validate_dateformat("2024-05-21 23:59:59")
+        assert "2024-05-21" ==  validate_dateformat("2024-05-21 00:00:00")
+        assert "2024-05-21" ==  validate_dateformat("2024-05-21 23:59:59")
 
 class TestInvalidDateCase:
     def test_invalid_dates(self):
@@ -43,7 +25,6 @@ class TestInvalidDateCase:
         assert not validate_dateformat("2024-06-1")
         assert not validate_dateformat("2024-6-01")
         assert not validate_dateformat("10000-01-01")
-        
 
     def test_invalid_datetimes(self):
         assert not validate_dateformat("2024-05-21 any string")
