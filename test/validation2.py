@@ -1,5 +1,5 @@
 import sys
-sys.path.append('./src')
+sys.path.append('../src')
 
 from datetime import datetime
 import pytest
@@ -19,21 +19,21 @@ class TestValidDateCase:
 
 class TestInvalidDateCase:
     def test_invalid_dates(self):
-        assert not validate_dateformat("2024-05-32")
-        assert not validate_dateformat("2024-06-31")
-        assert not validate_dateformat("2024-13-01")
-        assert not validate_dateformat("2024-06-1")
-        assert not validate_dateformat("2024-6-01")
-        assert not validate_dateformat("10000-01-01")
+        assert not "2024-05-32" == validate_dateformat("2024-05-32")
+        assert not "2024-06-31" == validate_dateformat("2024-06-31")
+        assert not "2024-13-01" == validate_dateformat("2024-13-01")
+        assert not "2024-06-1" == validate_dateformat("2024-06-1")
+        assert not "2024-6-01" == validate_dateformat("2024-6-01")
+        assert not "10000-01-01" == validate_dateformat("10000-01-01")
 
     def test_invalid_datetimes(self):
-        assert not validate_dateformat("2024-05-21 any string")
-        assert not validate_dateformat("2024-05-21 0:00:0")
-        assert not validate_dateformat("2024-05-21 -1:00:0")
-        assert not validate_dateformat("2024-05-21 25:00:00")
-        assert not validate_dateformat("2024-05-21 22:61:00")
-        assert not validate_dateformat("2024-05-21 22:00:60")
-        assert not validate_dateformat("2024-05-21 22:00")
-        assert not validate_dateformat("2024-05-21 22")
+        assert not "2024-05-21 any string" == validate_dateformat("2024-05-21 any string")
+        assert not "2024-05-21 0:00:0" == validate_dateformat("2024-05-21 0:00:0")
+        assert not "2024-05-21 -1:00:0" == validate_dateformat("2024-05-21 -1:00:0")
+        assert not "2024-05-21 25:00:00" == validate_dateformat("2024-05-21 25:00:00")
+        assert not "2024-05-21 22:61:00" == validate_dateformat("2024-05-21 22:61:00")
+        assert not "2024-05-21 22:00:60" == validate_dateformat("2024-05-21 22:00:60")
+        assert not "2024-05-21 22:00" == validate_dateformat("2024-05-21 22:00")
+        assert not "2024-05-21 22" == validate_dateformat("2024-05-21 22")
 
 # pytest -q validation2.py
