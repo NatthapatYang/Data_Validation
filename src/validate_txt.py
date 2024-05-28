@@ -1,11 +1,9 @@
 import sys
-sys.path.append('../src')
+sys.path.append('./src')
 
-from datetime import datetime
-import pytest
 from validate_date_format import validate_dateformat
 
-f = open("../datelist.txt", "r")
+f = open("./datelist.txt", "r")
 totalline = f.readlines()
 
 currentline = 0
@@ -23,8 +21,3 @@ for i in totalline:
 print("list of invalid dateformat line : {} ".format(list_invalid_dateformat))
 print("total valid dateformat : {}".format(totalvalid))
 print("total invalid dateformat : {}".format(totalinvalid))
-    
-""" form datelist.txt result after check valid or invalid dateformat
-    valid = 7 
-    invalid = 14 
-    list of invalid dateformat line = [ 6 7 8 9 10 11 14 15 16 17 18 19 20 21 ] """
