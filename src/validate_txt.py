@@ -18,6 +18,6 @@ for i in totalline:
         list_invalid_dateformat.append(currentline)
         totalinvalid += 1
 
-print("list of invalid dateformat line : {} ".format(list_invalid_dateformat))
-print("total valid dateformat : {}".format(totalvalid))
-print("total invalid dateformat : {}".format(totalinvalid))
+print("List of invalid dateformat line : {} ".format(list_invalid_dateformat))
+print("Total valid dateformat : {}".format(totalvalid))
+print("Total invalid dateformat : {}".format(totalinvalid))
