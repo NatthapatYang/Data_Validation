@@ -23,7 +23,6 @@ def validate_dateformat(str_date):
     else :
         return False
 
-
 if __name__ == '__main__':
 	valid_date = validate_dateformat(sys.argv[1])
 	print(valid_date)

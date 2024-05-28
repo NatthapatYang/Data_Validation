@@ -1,8 +1,6 @@
 import sys
-sys.path.append('../src')
+sys.path.append('./src')
 
-from datetime import datetime
-import pytest
 from validate_date_format import validate_dateformat
 
 class TestValidDateCase:
@@ -35,5 +33,3 @@ class TestInvalidDateCase:
         assert not "2024-05-21 22:00:60" == validate_dateformat("2024-05-21 22:00:60")
         assert not "2024-05-21 22:00" == validate_dateformat("2024-05-21 22:00")
         assert not "2024-05-21 22" == validate_dateformat("2024-05-21 22")
-
-# pytest -q validation2.py
