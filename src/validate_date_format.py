@@ -39,7 +39,7 @@ def validate_datetime_date_month_year_format(str_date):
     except ValueError :
         return False
 
-def validate_dateformat_date_month_year_format(str_date):
+def date_month_year_format(str_date):
     if len(str_date) == 10:
         return validate_dates_date_month_year_format(str_date)
     elif len(str_date) == 19:
@@ -48,5 +48,5 @@ def validate_dateformat_date_month_year_format(str_date):
         return False
 
 if __name__ == '__main__':
-	valid_date = validate_dateformat_iso8601format(sys.argv[1])
+	valid_date = iso8601_format(sys.argv[1])
 	print(valid_date)
