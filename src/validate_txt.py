@@ -9,7 +9,6 @@ import numpy as np
 df = pd.read_csv("datelist.txt", sep=",",header=None ,on_bad_lines='skip',
                  names=["Order ID","Customer Name","Dates","Product ID","Quantity","Total Price"])
 df.index = np.arange(1, len(df) + 1)
-
 total_row = len(df)
 current_line = 0
 total_valid = 0

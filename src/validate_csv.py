@@ -1,12 +1,10 @@
 import sys
 sys.path.append('./src')
 
-from datetime import datetime
 from validate_date_format import date_month_year_format
 import pandas as pd
 
-# read text file into pandas DataFrame and
-df = pd.read_csv("demo_purchase.csv", sep=",",header=None ,on_bad_lines='skip')
+df = pd.read_csv("demo_purchase.csv", sep=",", header=None, skiprows=[0] , on_bad_lines='skip')
 total_row = len(df)
 current_line = 0
 total_valid = 0
