@@ -1,14 +1,10 @@
 import sys
 sys.path.append('./src')
-from validate_date_format import iso8601_format
-import pandas as pd
-import numpy as np
 
-# read text file into pandas DataFrame and
-# create header
-df = pd.read_csv("datelist.txt", sep=",",header=None ,on_bad_lines='skip',
-                 names=["Order ID","Customer Name","Dates","Product ID","Quantity","Total Price"])
-df.index = np.arange(1, len(df) + 1)
+from validate_date_format import date_month_year_format
+import pandas as pd
+
+df = pd.read_csv("demo_purchase.csv", sep=",", header=None, skiprows=[0] , on_bad_lines='skip')
 total_row = len(df)
 current_line = 0
 total_valid = 0
@@ -17,7 +13,7 @@ list_invalid_dateformat = []
 list_valid_dateformat = []
 for i in range(total_row):
     current_line += 1
-    if iso8601_format(df.loc[i+1,"Dates"]):
+    if date_month_year_format(df.loc[i,2]):
         list_valid_dateformat.append(current_line)
         total_valid += 1
     else :
