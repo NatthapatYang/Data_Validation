@@ -15,9 +15,9 @@ total_valid = 0
 total_invalid = 0
 list_invalid_dateformat = []
 list_valid_dateformat = []
-for i in range(total_row):
+for index, row in df.iterrows():
     current_line += 1
-    if iso8601_format(df.loc[i+1,"Dates"]):
+    if iso8601_format(row["Dates"]):
         list_valid_dateformat.append(current_line)
         total_valid += 1
     else :

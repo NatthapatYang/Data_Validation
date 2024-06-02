@@ -3,17 +3,19 @@ sys.path.append('./src')
 
 from validate_date_format import date_month_year_format
 import pandas as pd
+import numpy as np
 
 df = pd.read_csv("demo_purchase.csv", sep=",", header=None, skiprows=[0] , on_bad_lines='skip')
+df.index = np.arange(1, len(df) + 1)
 total_row = len(df)
 current_line = 0
 total_valid = 0
 total_invalid = 0
 list_invalid_dateformat = []
 list_valid_dateformat = []
-for i in range(total_row):
+for index, row in df.iterrows():
     current_line += 1
-    if date_month_year_format(df.loc[i,2]):
+    if date_month_year_format(row[2]):
         list_valid_dateformat.append(current_line)
         total_valid += 1
     else :
