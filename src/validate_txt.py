@@ -1,15 +1,13 @@
 import sys
 sys.path.append('./src')
+
 from validate_date_format import iso8601_format
 import pandas as pd
 import numpy as np
 
-# read text file into pandas DataFrame and
-# create header
 df = pd.read_csv("datelist.txt", sep=",",header=None ,on_bad_lines='skip',
                  names=["Order ID","Customer Name","Dates","Product ID","Quantity","Total Price"])
 df.index = np.arange(1, len(df) + 1)
-total_row = len(df)
 total_valid = 0
 total_invalid = 0
 list_invalid_dateformat = []

@@ -7,7 +7,6 @@ import numpy as np
 
 df = pd.read_csv("demo_purchase.csv", sep=",", header=None, skiprows=[0] , on_bad_lines='skip')
 df.index = np.arange(1, len(df) + 1)
-total_row = len(df)
 total_valid = 0
 total_invalid = 0
 list_invalid_dateformat = []
