@@ -12,12 +12,12 @@ total_valid = 0
 total_invalid = 0
 list_invalid_dateformat = []
 list_valid_dateformat = []
-for row, column in df.iterrows():
-    if date_month_year_format(column["Created At"]):
-        list_valid_dateformat.append(row)
+for index , row in df.iterrows():
+    if date_month_year_format(row["Created At"]):
+        list_valid_dateformat.append(index)
         total_valid += 1
     else :
-        list_invalid_dateformat.append(row)
+        list_invalid_dateformat.append(index)
         total_invalid += 1
 
 print("List of invalid dateformat line : {} ".format(list_invalid_dateformat))
