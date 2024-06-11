@@ -2,12 +2,12 @@
 
 {% block content %}
     <div>
-        <form method = "POST" enctype="multipart/form-data">    
-            <input type="file" name="file" accept=".csv,.txt">
-        </form>
         <p style="color:rgb(34, 105, 197);">Choose csv file to upload</p>
-        <form action="/" target="_blank">
-            <input type = "submit" value="Validate Data">  
+        <form action="/validates" method="POST" enctype="multipart/form-data">    
+            <input type="file" name="file" accept=".csv,.txt">
+            <input type="submit"
+              value="Validate Data" 
+              style="display:block;padding:4px 8px;background-color:black;color:#dcdcdc;margin-top:16px;">  
         </form>
     </div>
 {% endblock %}

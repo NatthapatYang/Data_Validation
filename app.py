@@ -5,6 +5,7 @@ import sys
 sys.path.append('./src')
 from werkzeug.utils import secure_filename
 from validate_date_format import date_month_year_format
+from io import BufferedReader
 
 UPLOAD_FOLDER = os.path.join('staticFiles', 'uploads')
 
@@ -34,30 +35,35 @@ def validate_date():
             total_invalid += 1
     return total_valid , total_invalid , list_invalid_dateformat
 
-@app.route('/', methods=['GET', 'POST'])
-def uploadFile():
-    total_valid , total_invalid , list_invalid_dateformat = validate_date()
-	# upload file flask
-    request.method == 'POST'
+@app.route('/')
+def landing():
+    return render_template("home.html")
 
-    f = request.files.get('file')
-    # Extracting uploaded file name
-    data_filename = secure_filename(f.filename)
+@app.route('/validates', methods=['POST'])
+def validates():
+    f = request.files["file"]
+    buff = BufferedReader(f)
+    df = pd.read_csv(
+                buff,
+                encoding='unicode_escape',
+                sep=",", 
+                header=None,
+                skiprows=[0],
+                on_bad_lines='skip',
+                names=["Order Number","Customer Tel","Created At","Product SKU","Price","Quantity","Total"]
+             )
+    print(df)
 
-    f.save(os.path.join(app.config['UPLOAD_FOLDER'],data_filename))
+    df.index = list(range(1, len(df) + 1))
+    df_html = df.to_html()
 
-    session['uploaded_data_file_path'] = os.path.join(app.config['UPLOAD_FOLDER'],data_filename)
+    # validation goes here....
+    # total_valid , total_invalid , list_invalid_dateformat = validate_date()
+    # .....
+    # .....
+    result = "alsjdklajsdjakjsdljakljsdjasd"
 
-    data_file_path = session.get('uploaded_data_file_path', None)
-	# read csv
-    uploaded_df = pd.read_csv(data_file_path,encoding='unicode_escape', sep=",", header=None, skiprows=[0] , on_bad_lines='skip',
-                 names=["Order Number","Customer Tel","Created At","Product SKU","Price","Quantity","Total"])
-    uploaded_df.index = list(range(1, len(uploaded_df) + 1))
-	# Converting to html Table
-    uploaded_df_html = uploaded_df.to_html()
-
-    return render_template('show_csv_data.html',data_var=uploaded_df_html,total_valid_dateformat=total_valid
-                           ,total_invalid_dateformat=total_invalid,list_invalid_dateformat=list_invalid_dateformat)
+    return render_template("validates.html", result=result)
 
 
 @app.route('/show_data')
