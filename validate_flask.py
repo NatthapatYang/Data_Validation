@@ -9,7 +9,7 @@ from validate_date_format import date_month_year_format
 UPLOAD_FOLDER = os.path.join('staticFiles', 'uploads')
 
 # Define allowed files
-ALLOWED_EXTENSIONS = {'csv'}
+ALLOWED_EXTENSIONS = {'csv','txt'}
 app = Flask(__name__)
 # Configure upload file path flask
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -36,19 +36,28 @@ def validate_date():
 
 @app.route('/', methods=['GET', 'POST'])
 def uploadFile():
-	if request.method == 'POST':
+    total_valid , total_invalid , list_invalid_dateformat = validate_date()
 	# upload file flask
-		f = request.files.get('file')
+    request.method == 'POST'
 
-		# Extracting uploaded file name
-		data_filename = secure_filename(f.filename)
+    f = request.files.get('file')
+    # Extracting uploaded file name
+    data_filename = secure_filename(f.filename)
 
-		f.save(os.path.join(app.config['UPLOAD_FOLDER'],data_filename))
+    f.save(os.path.join(app.config['UPLOAD_FOLDER'],data_filename))
 
-		session['uploaded_data_file_path'] = os.path.join(app.config['UPLOAD_FOLDER'],data_filename)
+    session['uploaded_data_file_path'] = os.path.join(app.config['UPLOAD_FOLDER'],data_filename)
 
-		return render_template('uploaded.html')
-	return render_template("home.html")
+    data_file_path = session.get('uploaded_data_file_path', None)
+	# read csv
+    uploaded_df = pd.read_csv(data_file_path,encoding='unicode_escape', sep=",", header=None, skiprows=[0] , on_bad_lines='skip',
+                 names=["Order Number","Customer Tel","Created At","Product SKU","Price","Quantity","Total"])
+    uploaded_df.index = list(range(1, len(uploaded_df) + 1))
+	# Converting to html Table
+    uploaded_df_html = uploaded_df.to_html()
+
+    return render_template('show_csv_data.html',data_var=uploaded_df_html,total_valid_dateformat=total_valid
+                           ,total_invalid_dateformat=total_invalid,list_invalid_dateformat=list_invalid_dateformat)
 
 
 @app.route('/show_data')
@@ -59,8 +68,8 @@ def showData():
 	# read csv
     uploaded_df = pd.read_csv(data_file_path,encoding='unicode_escape', sep=",", header=None, skiprows=[0] , on_bad_lines='skip',
                  names=["Order Number","Customer Tel","Created At","Product SKU","Price","Quantity","Total"])
-	# Converting to html Table
     uploaded_df.index = list(range(1, len(uploaded_df) + 1))
+	# Converting to html Table
     uploaded_df_html = uploaded_df.to_html()
     return render_template('show_csv_data.html',data_var=uploaded_df_html,total_valid_dateformat=total_valid
                            ,total_invalid_dateformat=total_invalid,list_invalid_dateformat=list_invalid_dateformat)
