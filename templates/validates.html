@@ -1,0 +1,21 @@
+{% extends "layout.html"%}
+
+{% block content %}
+
+  <div>
+    <h1>Validate Result</h1>
+  </div>
+
+  <div>
+    <p>Total valid datformat : {{ total_valid_dateformat }}</p>
+    <p>Total invalid datformat : {{ total_invalid_dateformat }}</p>
+    <p>List invalid dateformat</p>
+    {% for item in list_invalid_dateformat %}
+        <ul>
+            <li>{{ item }}</li>
+        </ul>
+    {% endfor %}
+    {{ df_html|safe }}
+  </div>
+
+{% endblock %}
